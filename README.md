@@ -8,9 +8,7 @@ This tool makes cutted trd-file that can be used only for read-only. If you need
 
 ## How to use it?
 
-Simple way - copy this file to folder that contains SCL files and run it. Enter file name without extension(for ex. if file named "test.scl" just write "test"). 
-
-When conversion will be completed you may enter next file name and convert it, or you may go to NMI commander and try to load TRD file.
+Just run tap file, select SCL file, wait a moment and enjoy your new TRD file.
 
 ![Demo](doc/usage.gif?raw=true "Demo")
 
