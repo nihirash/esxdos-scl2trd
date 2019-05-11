@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <arch/zxn/esxdos.h>
+#include <arch/zx/esxdos.h>
 #include <errno.h>
 #include <string.h>
 
