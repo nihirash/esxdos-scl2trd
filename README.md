@@ -25,3 +25,5 @@ If it possible - please send all your improvments to me as PR. I'll be very glad
 ## Legals
 
 Copyleft (L) 2019 Alexander Sharikhin aka Nihirash
+
+Includes part of [ZXYLib](https://github.com/yomboprime/ZXYLib) by Juan Jose Luna Espinosa 
