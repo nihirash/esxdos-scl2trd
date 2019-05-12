@@ -134,9 +134,18 @@ void selectFile()
     textUtils_cls();
     textUtils_setAttributes( INK_BLUE | PAPER_BLACK );
     fileDialogpathUpOneDir( filePath );
- 
-    while ( openFileDialog( "Open SCL file", filePath, PATH_SIZE, INK_BLUE | PAPER_WHITE, INK_WHITE | PAPER_BLACK ) == false ) {
-        showMessage("Didn't select a file.");
+    while ( 
+        openFileDialog( 
+            "SCL2TRD by Nihirash v. 0.3.0 ", 
+            "  <Cursor> - movement   <Enter> - select file   <Space> - exit  ",
+            filePath, 
+            PATH_SIZE, 
+            INK_BLUE | PAPER_WHITE, 
+            INK_WHITE | PAPER_BLACK 
+            ) == false ) {
+        __asm
+            rst 0
+        __endasm;
     }
     textUtils_cls();
     textUtils_println("");

@@ -1,6 +1,7 @@
 /*
  * @author yomboprime
- *
+ * @author nihirash
+ * 
  * File dialog using ESXDOS
 */
 
@@ -18,7 +19,7 @@ void fileDialogCallBackSelectEntry( uint16_t numEntry, uint8_t *entryPtr, uint8_
 void fileDialogBrightSelection( uint16_t selectedEntry, bool bright );
 void updateVerticalBar( uint16_t xPos, uint16_t pos, uint16_t total, uint8_t attrs1, uint8_t attrs2 );
 
-#define OPENDIALOG_MAX_DIR_ENTRIES 20
+#define OPENDIALOG_MAX_DIR_ENTRIES 18
 #define OPENDIALOG_MAX_DIR_ENTRIES_2 400
 
 /*
@@ -33,8 +34,10 @@ void updateVerticalBar( uint16_t xPos, uint16_t pos, uint16_t total, uint8_t att
  *  appended to this string.
  * maxPathLength: If the total path exceeds this length, the function will return false (error)
  * attrs1, attrs2: Different colour attributes for the dialog.
+ * 
+ * Modified: 64 char mode
  */
-bool openFileDialog( uint8_t *message, uint8_t *path, int16_t maxPathLength, uint8_t attrs1, uint8_t attrs2 ) {
+bool openFileDialog( uint8_t *message, uint8_t *bottomMessage, uint8_t *path, int16_t maxPathLength, uint8_t attrs1, uint8_t attrs2 ) {
 
     uint8_t fileName[ 13 + 1 ];
 
@@ -48,7 +51,7 @@ bool openFileDialog( uint8_t *message, uint8_t *path, int16_t maxPathLength, uin
 
     uint16_t totalEntries = 0;
 
-    uint16_t titleX = 16 - ( strlen( message ) >> 1 );
+    uint16_t titleX = 32 - ( strlen( message ) >> 1 );
 
     bool refreshDirectory = true;
 
@@ -60,6 +63,10 @@ bool openFileDialog( uint8_t *message, uint8_t *path, int16_t maxPathLength, uin
     // Print title
     textUtils_printAt( titleX, 1 );
     textUtils_print( message );
+
+    textUtils_setAttributes ( attrs1 );
+    textUtils_printAt(0, 22);
+    textUtils_print( bottomMessage );
 
     while ( 1 ) {
 
@@ -168,9 +175,6 @@ bool openFileDialog( uint8_t *message, uint8_t *path, int16_t maxPathLength, uin
                 
                 break;
         }
-
-        //textUtils_print( "Key: " );
-        //textUtils_println_l( key );
     }
 
     return false;
@@ -248,9 +252,7 @@ uint16_t fileDialogIterateSDDirectory( uint8_t *dirPath, uint16_t firstEntry, ui
 }
 
 void fileDialogBrightSelection( uint16_t selectedEntry, bool bright ) {
-
     textUtils_paintSegmentWithBright( 2, 29, 3 + selectedEntry, bright );
-
 }
 
 void filedialogCallBackPrintEntry( uint16_t numEntry, uint8_t *entryPtr, uint8_t *userData ) {
@@ -284,27 +286,6 @@ void filedialogCallBackPrintEntry( uint16_t numEntry, uint8_t *entryPtr, uint8_t
         textUtils_print( " " );
         nChars++;
     }
-
-    /*
-    entryPtr++;
-
-    // Skip date
-    entryPtr+= 4;
-
-    if ( isDir == false ) {
-
-        // File size
-
-        fileSize = *entryPtr++;
-        fileSize += ( (uint32_t)( *entryPtr++ ) ) << 8;
-        fileSize += ( (uint32_t)( *entryPtr++ ) ) << 16;
-        fileSize += ( (uint32_t)( *entryPtr++ ) ) << 24;
-
-        sprintf( strNumber, "10%lu", fileSize );
-        textUtils_print( strNumber );
-
-    }
-    */
 }
 
 void fileDialogCallBackSelectEntry( uint16_t numEntry, uint8_t *entryPtr, uint8_t *userData ) {
@@ -408,7 +389,7 @@ void updateVerticalBar( uint16_t xPos, uint16_t pos, uint16_t total, uint8_t att
 
     // Print bar background
     textUtils_setAttributes( attrs1 );
-    for ( i = 3; i < 23; i++ ) {
+    for ( i = 3; i < OPENDIALOG_MAX_DIR_ENTRIES + 3; i++ ) {
         textUtils_printAt( xPos, i );
         fputc_cons( '|' );
     }

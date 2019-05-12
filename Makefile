@@ -2,7 +2,7 @@ libs = lib/esxdos.c lib/fileDialog.c lib/textUtils.c
 
 all: scl2trd.tap
 
-scl2trd.tap: scl2trd.c
+scl2trd.tap: scl2trd.c $(libs)
 	zcc +zx -lndos -lmzx $(libs) scl2trd.c -o scl2trd -create-app
 
 clean:
