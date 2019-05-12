@@ -12,6 +12,8 @@ Just run tap file, select SCL file, wait a moment and enjoy your new TRD file.
 
 ![Demo](doc/usage.gif?raw=true "Demo")
 
+There also [dot-command version](https://github.com/nihirash/esxdos-scl2trd-dot).
+
 ## Where get already built version?
 
 If you want just download ready to use version of tool, please download latest version from [releases page](https://github.com/nihirash/esxdos-scl2trd/releases)
