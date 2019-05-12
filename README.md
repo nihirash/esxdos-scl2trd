@@ -24,8 +24,12 @@ Any kind of PRs are welcome - misspell fix, code improvement, usability extendio
 
 If it possible - please send all your improvments to me as PR. I'll be very glad!
 
+## If you want support me?
+
+You may donate me via [PayPal](https://www.paypal.me/pinport).  
+
 ## Legals
 
-Copyleft (L) 2019 Alexander Sharikhin aka Nihirash
+Copyleft (L) 2019 Alexander Sharikhin aka Nihirash(anihirash@gmail.com)
 
 Includes part of [ZXYLib](https://github.com/yomboprime/ZXYLib) by Juan Jose Luna Espinosa 
