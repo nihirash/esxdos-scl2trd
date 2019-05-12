@@ -40,7 +40,14 @@ void writeDiskData()
         return;
     }
 
-    showMessage("File converted!");
+    ESXDOS_fclose(iStream);
+    ESXDOS_fclose(oStream);
+    textUtils_println(" * All data written!");
+    textUtils_println("");
+    textUtils_println(" TRD file is stored and ready to use!");
+    textUtils_println("");
+    textUtils_println(" Press any key to convert other SCL-file");
+    waitKeyPress();
 }
 
 void writeDiskInfo()
@@ -65,6 +72,7 @@ void writeDiskInfo()
         showMessage("Issue with writing disk info to TRD-file");
         return;
     }
+    textUtils_println(" * Disk information written");
     writeDiskData();
 }
 
@@ -95,7 +103,7 @@ void writeCatalog()
         showMessage("Issue with writing catalog to TRD-file");
         return;
     }
-
+    textUtils_println(" * Disk catalog written");
     writeDiskInfo();
 }
 
@@ -117,19 +125,22 @@ void validateScl()
         return;
     }
     sprintf(strstr(filePath, ".SCL"), ".TRD");
+    textUtils_println(" * File is valid SCL");
     writeCatalog();
 }
 
 void selectFile() 
 {
     textUtils_cls();
+    textUtils_setAttributes( INK_BLUE | PAPER_BLACK );
     fileDialogpathUpOneDir( filePath );
  
-    while ( openFileDialog( "Open SCL file", filePath, PATH_SIZE, INK_BLUE | PAPER_WHITE, INK_WHITE | PAPER_CYAN ) == false ) {
+    while ( openFileDialog( "Open SCL file", filePath, PATH_SIZE, INK_BLUE | PAPER_WHITE, INK_WHITE | PAPER_BLACK ) == false ) {
         showMessage("Didn't select a file.");
     }
     textUtils_cls();
-    textUtils_println("Converting file!");
+    textUtils_println("");
+    textUtils_println(" Converting file!");
 
     validateScl();
 }
@@ -138,7 +149,8 @@ void main(void)
 {
     sprintf( filePath, "/" );
     textUtils_64ColumnsMode();
-    zx_border( INK_BLUE );
+    
+    zx_border( INK_BLACK );
     while (1) 
     {
         selectFile();

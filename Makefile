@@ -6,4 +6,4 @@ scl2trd.tap: scl2trd.c
 	zcc +zx -lndos -lmzx $(libs) scl2trd.c -o scl2trd -create-app
 
 clean:
-	rm *.bin *.tap *.def
+	rm *.bin *.tap *.def scl2trd
