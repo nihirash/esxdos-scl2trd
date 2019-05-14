@@ -94,15 +94,9 @@ bool openFileDialog( uint8_t *message, uint8_t *bottomMessage, uint8_t *path, in
 
         switch ( key ) {
             
-            // Left
-            case 8:
-                break;
-
-            // Right
-            case 9:
-                break;
 
             // Down
+            case '8':
             case 10:
                 if ( selectedEntry == numEntries - 1 ) {
                     if ( moreEntries == true ) {
@@ -120,6 +114,7 @@ bool openFileDialog( uint8_t *message, uint8_t *bottomMessage, uint8_t *path, in
                 break;
 
             // Up
+            case '9':
             case 11:
                 if ( selectedEntry == 0 ) {
                     if ( firstEntry > 0 ) {
@@ -142,7 +137,7 @@ bool openFileDialog( uint8_t *message, uint8_t *bottomMessage, uint8_t *path, in
 
             // Enter
             case 13:
-
+            case '0':
                 numEntries = fileDialogIterateSDDirectory( path, firstEntry + selectedEntry, 1, fileDialogCallBackSelectEntry, NULL, NULL, fileName );
                 if ( numEntries > 0 ) {
                     if ( strcmp( fileName + 1, ".." ) == 0 ) {

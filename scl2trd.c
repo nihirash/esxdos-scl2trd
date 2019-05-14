@@ -153,8 +153,8 @@ void selectFile()
     fileDialogpathUpOneDir( filePath );
     while ( 
         openFileDialog( 
-            "SCL2TRD by Nihirash v. 1.0.0 ", 
-            "  <Cursor> - movement   <Enter> - select file   <Space> - exit  ",
+            "SCL2TRD by Nihirash v. 1.0.1", 
+            "<Cursor/Sincl> - movement  <Ent/0> - select file  <Space> - exit",
             filePath, 
             PATH_SIZE, 
             INK_BLUE | PAPER_WHITE, 
