@@ -4,7 +4,7 @@
 
 This is tool for converting your SCL files to TRD on your real speccy with esxDOS(divMMC/divIDE hardware, ZX-Uno, ZX Spectrum next etc).
 
-This tool makes cutted trd-file that can be used only for read-only. If you need write access - you may copy it into normal trd file or you may make PR where you will fix it.
+This tool can make cutted TRD(may be used only for read-only, but smaller size) and full TRD files.  
 
 ## How to use it?
 
