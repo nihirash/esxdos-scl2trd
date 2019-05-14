@@ -14,6 +14,8 @@ uint8_t buff[256];
 unsigned freeTrack = 1;
 unsigned freeSec = 0;
 unsigned char count;
+unsigned char isFull = 0;
+unsigned int totalFreeSect = 2544;
 
 void cleanBuffer()
 {
@@ -30,11 +32,18 @@ void showMessage(char *e)
 
 void writeDiskData()
 {
-    uint16_t r = ESXDOS_fread(&buff, 255, iStream);
-    while (r > 4) {
+    uint16_t r = ESXDOS_fread(&buff, 256, iStream);
+    while (r == 256) {
         ESXDOS_fwrite(&buff, r, oStream);
-        r = ESXDOS_fread(&buff, 255, iStream);
+        r = ESXDOS_fread(&buff, 256, iStream);
     }
+    
+    if (isFull) {
+        cleanBuffer();
+        for (r=0;r<totalFreeSect;r++)
+            ESXDOS_fwrite(&buff, 256, oStream);
+    }
+    
     iferror {
         showMessage("Issue with writing disk data to TRD-file");
         return;
@@ -57,8 +66,13 @@ void writeDiskInfo()
     buff[0xe4] = count;
     buff[0xe1] = freeSec;
     buff[0xe2] = freeTrack;
+    
+    if (isFull) {
+        buff[0xe6] = totalFreeSect / 256;
+        buff[0xe5] = totalFreeSect & 255;
+    }
+
     buff[0xe7] = 0x10;
-    buff[0xea] = 32;
     buff[0xf5] = 's';
     buff[0xf6] = 'c';
     buff[0xf7] = 'l';
@@ -79,6 +93,7 @@ void writeDiskInfo()
 void writeCatalog()
 {
     uint8_t i;
+    totalFreeSect = 2544;
 
     oStream = ESXDOS_fopen(filePath, ESXDOS_FILEMODE_WRITE_CREATE, drive);
     iferror {
@@ -93,6 +108,7 @@ void writeCatalog()
         buff[15] = freeTrack;
         freeSec += buff[0xd];
         freeTrack += freeSec / 16;
+        totalFreeSect -= (int) buff[0xd];
         freeSec = freeSec % 16;
         ESXDOS_fwrite(&buff, 16, oStream);
     }
@@ -131,12 +147,13 @@ void validateScl()
 
 void selectFile() 
 {
+    char c;
     textUtils_cls();
     textUtils_setAttributes( INK_BLUE | PAPER_BLACK );
     fileDialogpathUpOneDir( filePath );
     while ( 
         openFileDialog( 
-            "SCL2TRD by Nihirash v. 0.3.0 ", 
+            "SCL2TRD by Nihirash v. 1.0.0 ", 
             "  <Cursor> - movement   <Enter> - select file   <Space> - exit  ",
             filePath, 
             PATH_SIZE, 
@@ -147,8 +164,19 @@ void selectFile()
             rst 0
         __endasm;
     }
+
     textUtils_cls();
     textUtils_println("");
+    textUtils_print("Do you want full TRD-file? (y/n) ");
+    
+    while (!(c == 'y' || c == 'n')) {
+        c = waitKeyPress();
+    }
+
+    isFull = (c == 'y');
+
+    textUtils_println(isFull ? "yes" : "no");
+
     textUtils_println(" Converting file!");
 
     validateScl();
