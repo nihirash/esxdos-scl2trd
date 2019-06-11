@@ -94,6 +94,9 @@ void writeCatalog()
 {
     uint8_t i;
     totalFreeSect = 2544;
+    freeTrack = 1;
+    freeSec = 0;
+    count = 0;
 
     oStream = ESXDOS_fopen(filePath, ESXDOS_FILEMODE_WRITE_CREATE, drive);
     iferror {
