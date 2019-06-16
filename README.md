@@ -32,6 +32,6 @@ You may donate me via [PayPal](https://www.paypal.me/pinport).
 
 ## Legals
 
-Copyleft (L) 2019 Alexander Sharikhin aka Nihirash(anihirash@gmail.com)
+Copyright (R) 2019 Alexander Sharikhin aka Nihirash(anihirash@gmail.com)
 
 Includes part of [ZXYLib](https://github.com/yomboprime/ZXYLib) by Juan Jose Luna Espinosa 
